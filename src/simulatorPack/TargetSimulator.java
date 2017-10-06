@@ -11,14 +11,12 @@ public class TargetSimulator {
 		inst.SetInstructionQueue("./input.txt");
 		
 		ps = new PipeLineStages();
-		/*InstructionHandler handler = new InstructionHandler();
-		//read.fetchAllInstructions("./input.txt");
-		handler.SetInstructionQueue();*/
-		int pointer = 4000;
-		int cycles =10;
-		for(int i=0;i<cycles;i++){
+		int cycles = 10;
+		/*for(int i=0;i<cycles;i++){
 			ps.fetch(pointer);
 			pointer+=4;
-		}
+		}*/
+		ps.perform();
+		
 	}
 }
