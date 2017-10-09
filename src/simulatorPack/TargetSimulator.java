@@ -16,7 +16,7 @@ public class TargetSimulator {
 			ps.fetch(pointer);
 			pointer+=4;
 		}*/
-		ps.perform();
+		ps.performance();
 		
 	}
 }

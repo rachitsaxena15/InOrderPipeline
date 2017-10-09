@@ -1,8 +1,10 @@
 package core;
 
+import java.util.ArrayList;
+
 public class ConfigDetails {
 	
-	//Initial values of Registers. Can be configured on demand
+	//Initial values of Registers
 	public static int R0 = 0;
 	public static int R1 = 0;
 	public static int R2 = 0;
@@ -20,6 +22,10 @@ public class ConfigDetails {
 	public static int R14 = 0;
 	public static int R15 = 0;
 	
+	//List of instructions in D/RF.
+	public static ArrayList<String> list = new ArrayList<>();
+	
+	
 	//Set-Reset bit for each pipeline stage, indicating if an instruction can enter or not
 	public static boolean fetchQueueFree = true;
 	public static boolean decodeQueueFree = true;
@@ -30,15 +36,18 @@ public class ConfigDetails {
 	public static boolean memoryQueueFree = true;
 	public static boolean writeBackQueueFree = true;
 	
+	//Maintaining stall status of each stage
 	public static boolean fetchStalled = false;
 	public static boolean decodeStalled = false;
 	public static boolean executeStalled = false;
 	public static boolean memoryStalled = false;
 	public static boolean wbStalled = false;
 	
-	public static String InputBuffer = "";
-	public static String OutputBuffer ="";
+	//Input-Output buffer for passing instruction
+	public static String BufferInput = "";
+	public static String BufferOutput ="";
 	
+	//Base value of PC
 	public static int PC = 4000;
 	
 	//Maintaining status of instruction executing at each queue
