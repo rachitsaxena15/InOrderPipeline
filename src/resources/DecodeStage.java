@@ -29,6 +29,19 @@ public class DecodeStage{
 	}
 
 	//Decode Input
+	/******************************************************************
+	Decode Input - Sets Input values of DECODE stage
+	@param	int PCAtOutput
+	@param	int targetDataAtOutput
+	@param	int targetAddressAtOutput
+	@param	int literalAtOutput
+	@param	String instAtOutput
+	@param	String src1AtOutput
+	@param	String src2AtOutput 
+	@param	String destAtOutput
+	@param	String OperationAtOutput
+	@return void
+	******************************************************************/
 	public DecodeStage(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
 		DecodeStage.PCAtInput = PCAtInput;
 		DecodeStage.targetDataAtInput = targetDataAtInput;
@@ -42,6 +55,19 @@ public class DecodeStage{
 	}
 
 	//Decode Output
+	/******************************************************************
+	Decode Output - Sets Output values of DECODE stage
+	@param	String instAtOutput
+	@param	String src1AtOutput
+	@param	String src2AtOutput 
+	@param	String destAtOutput
+	@param	String OperationAtOutput
+	@param	int PCAtOutput
+	@param	int targetDataAtOutput
+	@param	int targetAddressAtOutput
+	@param	int literalAtOutput
+	@return void
+	******************************************************************/
 	public DecodeStage(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
 		DecodeStage.instAtOutput = instAtOutput;
 		DecodeStage.src1AtOutput = src1AtOutput;

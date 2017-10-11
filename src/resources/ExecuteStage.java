@@ -28,6 +28,19 @@ public class ExecuteStage{
 	}
 	
 	//Execute Input
+	/******************************************************************
+	Execute Input - Sets Input values of EXECUTE stage
+	@param	int PCAtOutput
+	@param	int targetDataAtOutput
+	@param	int targetAddressAtOutput
+	@param	int literalAtOutput
+	@param	String instAtOutput
+	@param	String src1AtOutput
+	@param	String src2AtOutput 
+	@param	String destAtOutput
+	@param	String OperationAtOutput
+	@return void
+	******************************************************************/
 	public ExecuteStage(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
 		ExecuteStage.PCAtInput = PCAtInput;
 		ExecuteStage.targetDataAtInput = targetDataAtInput;
@@ -41,6 +54,19 @@ public class ExecuteStage{
 	}
 
 	//Execute Output
+	/******************************************************************
+	Execute Output - Sets Output values of EXECUTE stage
+	@param	String instAtOutput
+	@param	String src1AtOutput
+	@param	String src2AtOutput 
+	@param	String destAtOutput
+	@param	String OperationAtOutput
+	@param	int PCAtOutput
+	@param	int targetDataAtOutput
+	@param	int targetAddressAtOutput
+	@param	int literalAtOutput
+	@return void
+	******************************************************************/
 	public ExecuteStage(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
 		ExecuteStage.instAtOutput = instAtOutput;
 		ExecuteStage.src1AtOutput = src1AtOutput;

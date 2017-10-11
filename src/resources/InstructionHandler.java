@@ -45,44 +45,4 @@ public class InstructionHandler {
 	public String getInstruction(int pointer){
 		return hm.get(pointer);
 	}
-	
-	public void add(int src1, int src2, int dest){
-		
-	}
-	
-	public void store() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void load() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void multiply() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void movc() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void sub() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void bz() {
-		// TODO Auto-generated method stub
-
-	}
-	
-	public void bnz() {
-		// TODO Auto-generated method stub
-
-	}
-
 }
