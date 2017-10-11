@@ -8,15 +8,14 @@ public class TargetSimulator {
 	
 	public static void main(String[] args) {
 		InstructionHandler inst = new InstructionHandler();
-		inst.SetInstructionQueue("./input.txt");
+		inst.SetInstructionQueue("./input_20171010.txt");
 		
 		ps = new PipeLineStages();
-		int cycles = 10;
-		/*for(int i=0;i<cycles;i++){
-			ps.fetch(pointer);
-			pointer+=4;
-		}*/
-		ps.performance();
-		
+		/*InstructionHandler handler = new InstructionHandler();
+		//read.fetchAllInstructions("./input.txt");
+		handler.SetInstructionQueue();*/
+		int pointer = 4000;
+		int cycles =10;
+			ps.pipeline();//fetch(pointer);
 	}
 }

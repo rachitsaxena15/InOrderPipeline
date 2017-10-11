@@ -4,68 +4,18 @@ import core.ConfigDetails;
 
 public class ArithmeticOperations extends ConfigDetails{
 	
-	public void add(String dest, String src1, String src2){
+	public int add(String src1, String src2){
 		int res = getValueFromRegister(src1)+getValueFromRegister(src2);
-		updateToRegister(dest, res);
-		System.out.println("\t"+dest +" ===== "+ res);
+		return res;
+		//updateToRegister(dest, res);
+		//System.out.println("\t"+dest +" ===== "+ res);
 	}
 	
-	public void move(String dest, String src1){
+	public int move(String src1){
 		int res = getValueFromRegister(src1);
-		updateToRegister(dest, res);
-		System.out.println("\t"+dest +" ===== "+ res);
-	}
-
-	void updateToRegister(String dest, int res){
-		switch (dest) {
-		case "R1":
-			R1 = res;
-			break;
-		case "R2":
-			R2 = res;
-			break;
-		case "R3":
-			R3 = res;
-			break;
-		case "R4":
-			R4 = res;
-			break;
-		case "R5":
-			R5 = res;
-			break;
-		case "R6":
-			R6 = res;
-			break;
-		case "R7":
-			R7 = res;
-			break;
-		case "R8":
-			R8 = res;
-			break;
-		case "R9":
-			R9 = res;
-			break;
-		case "R10":
-			R10 = res;
-			break;
-		case "R11":
-			R11 = res;
-			break;
-		case "R12":
-			R12 = res;
-			break;
-		case "R13":
-			R13 = res;
-			break;
-		case "R14":
-			R14 = res;
-			break;
-		case "R15":
-			R15 = res;
-			break;
-		default:
-			break;
-		}
+		return res;
+		/*updateToRegister(dest, res);
+		System.out.println("\t"+dest +" ===== "+ res);*/
 	}
 	
 	int getValueFromRegister(String reg){
@@ -106,5 +56,60 @@ public class ArithmeticOperations extends ConfigDetails{
 		}
 		else
 			return 0;
+	}
+	
+	public void updateToRegister(String dest, int result){
+		switch (dest) {
+		case "R0":
+			R0 = result;
+			break;
+		case "R1":
+			R1 = result;
+			break;
+		case "R2":
+			R2 = result;
+			break;
+		case "R3":
+			R3 = result;
+			break;
+		case "R4":
+			R4 = result;
+			break;
+		case "R5":
+			R5 = result;
+			break;
+		case "R6":
+			R6 = result;
+			break;
+		case "R7":
+			R7 = result;
+			break;
+		case "R8":
+			R8 = result;
+			break;
+		case "R9":
+			R9 = result;
+			break;
+		case "R10":
+			R10 = result;
+			break;
+		case "R11":
+			R11 = result;
+			break;
+		case "R12":
+			R12 = result;
+			break;
+		case "R13":
+			R13 = result;
+			break;
+		case "R14":
+			R14 = result;
+			break;
+		case "R15":
+			R15 = result;
+			break;
+		default:
+			break;
+		}
 	}
 }
