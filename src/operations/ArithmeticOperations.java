@@ -7,18 +7,24 @@ public class ArithmeticOperations extends ConfigDetails{
 	public int add(String src1, String src2){
 		int res = getValueFromRegister(src1)+getValueFromRegister(src2);
 		return res;
-		//updateToRegister(dest, res);
-		//System.out.println("\t"+dest +" ===== "+ res);
+	}
+	
+	public int sub(String src1, String src2){
+		int res = getValueFromRegister(src1)-getValueFromRegister(src2);
+		return res;
+	}
+	
+	public int add(String src1, int literal){
+		int res = getValueFromRegister(src1)+literal;
+		return res;
 	}
 	
 	public int move(String src1){
 		int res = getValueFromRegister(src1);
 		return res;
-		/*updateToRegister(dest, res);
-		System.out.println("\t"+dest +" ===== "+ res);*/
 	}
 	
-	int getValueFromRegister(String reg){
+	public int getValueFromRegister(String reg){
 		if(reg.equals("R0"))
 			return R0;
 		else if(reg.equals("R1"))

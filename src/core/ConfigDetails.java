@@ -52,5 +52,11 @@ public class ConfigDetails {
 
 	// Base value of PC
 	public static int PC;
+	
+	//Zero Flag
+	public static boolean zeroFlag;
+	
+	//PC of last executed Arithmetic Instruction
+	public static int lastArithmeticPC;
 
 }

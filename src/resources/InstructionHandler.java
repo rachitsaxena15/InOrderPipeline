@@ -8,7 +8,8 @@ import java.util.HashMap;
 public class InstructionHandler {
 
 	static HashMap<Integer, String> hm;
-
+	static HashMap<Integer, Integer> memory;
+	
 	public void SetInstructionQueue(String fileLocation){
 		File file = new File(fileLocation);
 		int j=4000;
@@ -42,6 +43,23 @@ public class InstructionHandler {
 		}
 	}
 
+	public void initializeMemory(){
+		memory = new HashMap<>();
+		int i=0;
+		while(i<4000){
+			memory.put(i, 0);
+			i+=4;
+		}
+	}
+	
+	public void writeToMemory(int address, int value){
+		memory.put(address, value);
+	}
+	
+	public int readFromMemory(int address){
+		return memory.get(address);
+	}
+	
 	public String getInstruction(int pointer){
 		return hm.get(pointer);
 	}

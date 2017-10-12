@@ -22,14 +22,15 @@ public class PipeLineStages extends ConfigDetails {
 
 			/*****************************Fetch **************************/
 			if (fetchStalled) {
-				System.out.println("Fetch : Stall Instruction : " + fetch.getInstAtInput());
+
 			} else {
+
 				inst = new InstructionHandler();
 				fetch.setPCAtInput(PC);
+				//If fetch finds no instruction, let current instruction pass, and initialize fetch with default values
 				if (inst.getInstruction(PC) == null) {
 					fetch.setInstAtInput("");
-					System.out.println("Fetch : " + fetch.getInstAtInput());
-
+					fetch.setPCAtInput(PC);
 					// Update Decode Input
 					decode = new DecodeStage(fetch.getPCAtOutput(),
 							fetch.getTargetDataAtOutput(),
@@ -43,7 +44,7 @@ public class PipeLineStages extends ConfigDetails {
 					fetch = new FetchStage("", "", "", "", "", PC, 0, 0, 0);
 				} else {
 					fetch.setInstAtInput(inst.getInstruction(PC));
-					System.out.println("Fetch : " + fetch.getInstAtInput());
+					fetch.setPCAtInput(PC);
 
 					// Update Decode Input
 					decode = new DecodeStage(fetch.getPCAtOutput(),
@@ -64,16 +65,18 @@ public class PipeLineStages extends ConfigDetails {
 							fetch.getLiteralAtInput());
 				}
 			}
+			System.out.println("Fetch : " + fetch.getInstAtInput());
 
 			/***************************** Decode **************************/
+			System.out.println("Decode : ");
 			String instArr[];
+			int res;
 			if (decodeStalled) {
-				System.out.println("Decode : Stall Instruction :" + decode.getInstAtInput());
+				//System.out.println("Decode : " + decode.getInstAtInput() + "- HALT Invoked");
 			} else {
-				System.out.println("Decode : " + decode.getInstAtInput());
+				System.out.print(decode.getInstAtInput());
 				if (!decode.getInstAtInput().equals("")) {
 					instArr = decode.getInstAtInput().split(",");
-					// instType = instArr[0];
 
 					switch (decode.getInstAtInput().split(",")[0].trim()) {
 
@@ -82,6 +85,15 @@ public class PipeLineStages extends ConfigDetails {
 						decode.setDestAtInput(instArr[1]);
 						decode.setSrc1AtInput(instArr[2]);
 						decode.setSrc2AtInput(instArr[3]);
+						
+						lastArithmeticPC = decode.getPCAtInput();
+						break;
+					case "SUB":
+						decode.setOperationAtInput(instArr[0]);
+						decode.setDestAtInput(instArr[1]);
+						decode.setSrc1AtInput(instArr[2]);
+						decode.setSrc2AtInput(instArr[3]);
+						lastArithmeticPC = decode.getPCAtInput();
 						break;
 					case "MOVC":
 						decode.setOperationAtInput(instArr[0]);
@@ -89,10 +101,40 @@ public class PipeLineStages extends ConfigDetails {
 						decode.setSrc1AtInput(instArr[2]);
 						decode.setSrc2AtInput("");
 						break;
+					case "STORE":
+						decode.setOperationAtInput(instArr[0]);
+						decode.setSrc1AtInput(instArr[1]);
+						decode.setSrc2AtInput(instArr[2]);
+						decode.setLiteralAtInput(operations.getValueFromRegister(instArr[3]));
+						res = operations.add(decode.getSrc1AtInput(), decode.getLiteralAtInput());
+						decode.setTargetAddressAtInput(res);
+						break;
+					case "LOAD":
+						decode.setOperationAtInput(instArr[0]);
+						decode.setDestAtInput(instArr[1]);
+						decode.setSrc1AtInput(instArr[2]);
+						res = operations.add(decode.getSrc1AtInput(), instArr[3]);
+						decode.setTargetDataAtInput(res);
+						break;
+					case "BZ":
+						decode.setOperationAtInput(instArr[0]);
+						decode.setLiteralAtInput(operations.getValueFromRegister(instArr[1]));
+						break;
+					case "HALT":
+						decode.setOperationAtInput(instArr[0]);
+						break;
+					case "JUMP":
+						decode.setOperationAtInput(instArr[0]);
+						decode.setSrc1AtInput(instArr[1]);
+						decode.setLiteralAtInput(operations.getValueFromRegister(instArr[2]));
+						//decode.setPCAtInput(operations.add(decode.getSrc1AtInput(), decode.getLiteralAtInput()));
+						break;
 					default:
 						break;
 					}
 				}
+
+				updateRegisterValidity(decode.getDestAtOutput(), false);
 
 				// Update Execute Input
 				ex = new ExecuteStage(decode.getPCAtOutput(),
@@ -112,20 +154,46 @@ public class PipeLineStages extends ConfigDetails {
 			}
 
 			/***************************** Execute **************************/
+			System.out.print("Execute : ");
 			if (executeStalled) {
-				System.out.println("Execute : " + ex.getInstAtInput());
+				//System.out.print(ex.getInstAtInput());
 			} else {
-				System.out.println("Execute : " + ex.getInstAtInput());
-				updateRegisterValidity(ex.getDestAtInput(), false);
+				System.out.println(ex.getInstAtInput());
+				//updateRegisterValidity(ex.getDestAtInput(), false);
 
+				//Perform Add
 				if (ex.getOperationAtInput().equals("ADD")) {
 					ex.setTargetDataAtInput(operations.add(ex.getSrc1AtInput(),
 							ex.getSrc2AtInput()));
+				}
+				//Perform Subtract
+				else if(ex.getOperationAtInput().equals("SUB")) {
+					ex.setTargetDataAtInput(operations.sub(ex.getSrc1AtInput(),
+							ex.getSrc2AtInput()));
+				//Perform Move
 				} else if (ex.getOperationAtInput().equals("MOVC")) {
 					ex.setTargetDataAtInput(operations.move(ex.getSrc1AtInput()));
+				}	
+				//Perform Branch if Zero
+				else if (ex.getOperationAtInput().equals("BZ")) {
+					if(wb.getPCAtInput()>=lastArithmeticPC){
+						PC+=ex.getLiteralAtInput()-4;
+					}
+					else{
+						decodeStalled=true;
+					}
+				}
+				else if(ex.getOperationAtInput().equals("JUMP")){
+					fetch.setPCAtInput((operations.add(ex.getSrc1AtInput(), ex.getLiteralAtInput())) - 4);
+				}
+					
+				//Stall on Halt
+				 else if(ex.getOperationAtInput().equals("HALT")){
+					fetchStalled = true;
+					decodeStalled = true;
 				}
 
-				// Stalling Logic
+				// Stalling Logic for Flow Dependencies
 				if (!(checkRegisterValidity(decode.getSrc1AtOutput()) && checkRegisterValidity(decode
 						.getSrc2AtOutput()))) {
 					fetchStalled = true;
@@ -152,8 +220,13 @@ public class PipeLineStages extends ConfigDetails {
 				System.out.println("Memory = " + mem.getInstAtInput());
 			} else {
 				System.out.println("Memory = " + mem.getInstAtInput());
-				// ToDo - memory task
 
+				if(mem.getOperationAtInput().equals("STORE")){
+					inst.writeToMemory(mem.getTargetAddressAtInput(), operations.getValueFromRegister(mem.getSrc1AtInput()));
+				}
+				else if(mem.getOperationAtInput().equals("LOAD")){
+					operations.updateToRegister(mem.getDestAtInput(), mem.getTargetDataAtInput());
+				}
 				// Update WB Input
 				wb = new WriteBackStage(mem.getPCAtOutput(),
 						mem.getTargetDataAtOutput(),
@@ -177,13 +250,51 @@ public class PipeLineStages extends ConfigDetails {
 				System.out.println("WriteBack = " + wb.getInstAtInput());
 				operations.updateToRegister(wb.getDestAtInput(),
 						wb.getTargetDataAtInput());
-				// register ka status true kardo
+
+				// Update Register validity to true
 				updateRegisterValidity(wb.getDestAtInput(), true);
 
-				if (checkRegisterValidity(decode.getSrc1AtOutput())
-						&& checkRegisterValidity(decode.getSrc2AtOutput())) {
-					fetchStalled = false;
-					decodeStalled = false;
+				switch(decode.getOperationAtOutput()){
+				case "ADD":
+					if(wb.getTargetDataAtInput()==0){
+						zeroFlag = true;
+					}
+					else{
+						zeroFlag = false;
+					}
+					if (checkRegisterValidity(decode.getSrc1AtOutput())
+							&& checkRegisterValidity(decode.getSrc2AtOutput())) {
+						fetchStalled = false;
+						decodeStalled = false;
+					}
+					break;
+				case "SUB":
+					if (checkRegisterValidity(decode.getSrc1AtOutput())
+							&& checkRegisterValidity(decode.getSrc2AtOutput())) {
+						fetchStalled = false;
+						decodeStalled = false;
+					}
+					break;
+				case "STORE":
+					if (checkRegisterValidity(decode.getSrc1AtOutput())
+							&& checkRegisterValidity(decode.getSrc2AtOutput())) {
+						fetchStalled = false;
+						decodeStalled = false;
+					}
+					break;
+				case "LOAD":
+					if(!checkRegisterValidity(decode.getSrc1AtOutput())){
+						fetchStalled = false;
+						decodeStalled = false;
+					}
+					break;
+				case "JUMP":
+					if(checkRegisterValidity(decode.getSrc1AtInput())){
+						fetchStalled = false;
+						decodeStalled = false;
+					}
+				default:
+					break;
 				}
 
 				// Update WB Output
@@ -192,6 +303,8 @@ public class PipeLineStages extends ConfigDetails {
 						wb.getDestAtInput(), wb.getOperationAtInput(),
 						wb.getPCAtInput(), wb.getTargetDataAtInput(),
 						wb.getTargetAddressAtInput(), wb.getLiteralAtInput());
+
+				//Increment PC value only if there is no stall at any stage
 				if (!(fetchStalled || decodeStalled || executeStalled
 						|| memoryStalled || wbStalled)) {
 					PC += 4;
@@ -259,6 +372,12 @@ public class PipeLineStages extends ConfigDetails {
 		R13Valid = true;
 		R14Valid = true;
 		R15Valid = true;
+		
+		// Initialize zero Flag to false by default
+		zeroFlag = false;
+		
+		// Initialize last arithmetic PC value to 65535 as this value should be larger than the PC of last arithmetic instruction
+		lastArithmeticPC = 65536;
 	}
 
 	boolean checkRegisterValidity(String registerName) {

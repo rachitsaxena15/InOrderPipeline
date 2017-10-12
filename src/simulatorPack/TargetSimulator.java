@@ -9,6 +9,7 @@ public class TargetSimulator {
 	public static void main(String[] args) {
 		InstructionHandler inst = new InstructionHandler();
 		inst.SetInstructionQueue("./input_20171010.txt");
+		inst.initializeMemory();
 		
 		ps = new PipeLineStages();
 		/*InstructionHandler handler = new InstructionHandler();
