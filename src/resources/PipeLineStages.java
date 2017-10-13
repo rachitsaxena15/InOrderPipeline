@@ -5,29 +5,32 @@ import core.ConfigDetails;
 
 public class PipeLineStages extends ConfigDetails {
 
-	InstructionHandler inst;
+	InstAndMemInitializer inst;
 	FetchStage fetch;
 	DecodeStage decode;
 	ExecuteStage ex;
 	MemoryStage mem;
 	WriteBackStage wb;
 	ArithmeticOperations operations;
+	PSW psw;
 
 	public void pipeline() {
 		initialize();
 		operations = new ArithmeticOperations();
 		int i = 0;
-		while (i <= 9) {
-			System.out.println("--------------------I" + i + "------------------");
+		while (i <= 30) {
+			System.out.println("--------------------I" + i
+					+ "------------------");
 
-			/*****************************Fetch **************************/
+			/***************************** Fetch **************************/
+			System.out.print("Fetch\t::\t");
 			if (fetchStalled) {
-
+				System.out.println(fetch.getInstAtInput());
 			} else {
-
-				inst = new InstructionHandler();
+				inst = new InstAndMemInitializer();
 				fetch.setPCAtInput(PC);
-				//If fetch finds no instruction, let current instruction pass, and initialize fetch with default values
+				// If fetch finds no instruction, let current instruction pass,
+				// and initialize fetch with default values
 				if (inst.getInstruction(PC) == null) {
 					fetch.setInstAtInput("");
 					fetch.setPCAtInput(PC);
@@ -54,7 +57,6 @@ public class PipeLineStages extends ConfigDetails {
 							fetch.getInstAtOutput(), fetch.getSrc1AtOutput(),
 							fetch.getSrc2AtOutput(), fetch.getDestAtOutput(),
 							fetch.getOperationAtOutput());
-
 					// Update Fetch Output
 					fetch = new FetchStage(fetch.getInstAtInput(),
 							fetch.getSrc1AtInput(), fetch.getSrc2AtInput(),
@@ -64,17 +66,18 @@ public class PipeLineStages extends ConfigDetails {
 							fetch.getTargetAddressAtInput(),
 							fetch.getLiteralAtInput());
 				}
+				System.out.println(fetch.getInstAtInput());
 			}
-			System.out.println("Fetch : " + fetch.getInstAtInput());
 
 			/***************************** Decode **************************/
-			System.out.println("Decode : ");
+			System.out.print("Decode\t::\t");
 			String instArr[];
 			int res;
 			if (decodeStalled) {
-				//System.out.println("Decode : " + decode.getInstAtInput() + "- HALT Invoked");
+				// Print balnk new line
+				System.out.println(decode.getInstAtInput());
 			} else {
-				System.out.print(decode.getInstAtInput());
+				System.out.println(decode.getInstAtInput());
 				if (!decode.getInstAtInput().equals("")) {
 					instArr = decode.getInstAtInput().split(",");
 
@@ -85,15 +88,21 @@ public class PipeLineStages extends ConfigDetails {
 						decode.setDestAtInput(instArr[1]);
 						decode.setSrc1AtInput(instArr[2]);
 						decode.setSrc2AtInput(instArr[3]);
-						
-						lastArithmeticPC = decode.getPCAtInput();
+						psw.setPswFree(false);
 						break;
 					case "SUB":
 						decode.setOperationAtInput(instArr[0]);
 						decode.setDestAtInput(instArr[1]);
 						decode.setSrc1AtInput(instArr[2]);
 						decode.setSrc2AtInput(instArr[3]);
-						lastArithmeticPC = decode.getPCAtInput();
+						psw.setPswFree(false);
+						break;
+					case "MUL":
+						decode.setOperationAtInput(instArr[0]);
+						decode.setDestAtInput(instArr[1]);
+						decode.setSrc1AtInput(instArr[2]);
+						decode.setSrc2AtInput(instArr[3]);
+						psw.setPswFree(false);
 						break;
 					case "MOVC":
 						decode.setOperationAtInput(instArr[0]);
@@ -105,20 +114,24 @@ public class PipeLineStages extends ConfigDetails {
 						decode.setOperationAtInput(instArr[0]);
 						decode.setSrc1AtInput(instArr[1]);
 						decode.setSrc2AtInput(instArr[2]);
-						decode.setLiteralAtInput(operations.getValueFromRegister(instArr[3]));
-						res = operations.add(decode.getSrc1AtInput(), decode.getLiteralAtInput());
+						decode.setLiteralAtInput(operations
+								.getValueFromRegister(instArr[3]));
+						res = operations.add(decode.getSrc1AtInput(),
+								decode.getLiteralAtInput());
 						decode.setTargetAddressAtInput(res);
 						break;
 					case "LOAD":
 						decode.setOperationAtInput(instArr[0]);
 						decode.setDestAtInput(instArr[1]);
 						decode.setSrc1AtInput(instArr[2]);
-						res = operations.add(decode.getSrc1AtInput(), instArr[3]);
+						res = operations.add(decode.getSrc1AtInput(),
+								instArr[3]);
 						decode.setTargetDataAtInput(res);
 						break;
-					case "BZ":
+					case "BNZ":
 						decode.setOperationAtInput(instArr[0]);
-						decode.setLiteralAtInput(operations.getValueFromRegister(instArr[1]));
+						decode.setLiteralAtInput(operations
+								.getValueFromRegister(instArr[1]));
 						break;
 					case "HALT":
 						decode.setOperationAtInput(instArr[0]);
@@ -126,8 +139,10 @@ public class PipeLineStages extends ConfigDetails {
 					case "JUMP":
 						decode.setOperationAtInput(instArr[0]);
 						decode.setSrc1AtInput(instArr[1]);
-						decode.setLiteralAtInput(operations.getValueFromRegister(instArr[2]));
-						//decode.setPCAtInput(operations.add(decode.getSrc1AtInput(), decode.getLiteralAtInput()));
+						decode.setLiteralAtInput(operations
+								.getValueFromRegister(instArr[2]));
+						// decode.setPCAtInput(operations.add(decode.getSrc1AtInput(),
+						// decode.getLiteralAtInput()));
 						break;
 					default:
 						break;
@@ -154,43 +169,53 @@ public class PipeLineStages extends ConfigDetails {
 			}
 
 			/***************************** Execute **************************/
-			System.out.print("Execute : ");
+			System.out.print("Execute\t::\t");
 			if (executeStalled) {
-				//System.out.print(ex.getInstAtInput());
+				// System.out.print(ex.getInstAtInput());
 			} else {
 				System.out.println(ex.getInstAtInput());
-				//updateRegisterValidity(ex.getDestAtInput(), false);
+				// updateRegisterValidity(ex.getDestAtInput(), false);
 
-				//Perform Add
+				// Perform Add
 				if (ex.getOperationAtInput().equals("ADD")) {
 					ex.setTargetDataAtInput(operations.add(ex.getSrc1AtInput(),
 							ex.getSrc2AtInput()));
 				}
-				//Perform Subtract
-				else if(ex.getOperationAtInput().equals("SUB")) {
+				// Perform Subtract
+				else if (ex.getOperationAtInput().equals("SUB")) {
 					ex.setTargetDataAtInput(operations.sub(ex.getSrc1AtInput(),
 							ex.getSrc2AtInput()));
-				//Perform Move
-				} else if (ex.getOperationAtInput().equals("MOVC")) {
+				}
+				// Perform Multiply
+				else if (ex.getOperationAtInput().equals("SUB")) {
+					ex.setTargetDataAtInput(operations.mul(ex.getSrc1AtInput(),
+							ex.getSrc2AtInput()));
+				}
+				// Perform Move
+				else if (ex.getOperationAtInput().equals("MOVC")) {
 					ex.setTargetDataAtInput(operations.move(ex.getSrc1AtInput()));
-				}	
-				//Perform Branch if Zero
-				else if (ex.getOperationAtInput().equals("BZ")) {
-					if(wb.getPCAtInput()>=lastArithmeticPC){
-						PC+=ex.getLiteralAtInput()-4;
-					}
-					else{
-						decodeStalled=true;
-					}
 				}
-				else if(ex.getOperationAtInput().equals("JUMP")){
-					fetch.setPCAtInput((operations.add(ex.getSrc1AtInput(), ex.getLiteralAtInput())) - 4);
+
+				// Perform JUMP
+				else if (ex.getOperationAtInput().equals("JUMP")) {
+					fetch.setPCAtInput((operations.add(ex.getSrc1AtInput(),
+							ex.getLiteralAtInput())) - 4);
 				}
-					
-				//Stall on Halt
-				 else if(ex.getOperationAtInput().equals("HALT")){
-					fetchStalled = true;
-					decodeStalled = true;
+
+				// Check for BNZ
+				else if (ex.getOperationAtInput().equals("BNZ")) {
+					// calculate PC address
+					PC = (ex.getPCAtInput() + ex.getLiteralAtInput()) - 4;
+				}
+				// Stall on Halt
+				else if (ex.getOperationAtInput().equals("HALT")) {
+					// Decode input becomes empty
+					fetch = new FetchStage("", "", "", "", "", 0, 0, 0, 0);
+					fetch = new FetchStage(0, 0, 0, 0, "", "", "", "", "");
+					decode = new DecodeStage(0, 0, 0, 0, "", "", "", "", "");
+					decode = new DecodeStage("", "", "", "", "", 0, 0, 0, 0);
+					// fetchStalled = true;
+					// decodeStalled = true;
 				}
 
 				// Stalling Logic for Flow Dependencies
@@ -198,6 +223,14 @@ public class PipeLineStages extends ConfigDetails {
 						.getSrc2AtOutput()))) {
 					fetchStalled = true;
 					decodeStalled = true;
+				}
+
+				// Stalling logic for Branching instruction
+				if (decode.getOperationAtOutput().equals("BNZ")) {
+					if (!psw.isPswFree()) {
+						fetchStalled = true;
+						decodeStalled = true;
+					}
 				}
 
 				// Update memory Input
@@ -216,16 +249,19 @@ public class PipeLineStages extends ConfigDetails {
 			}
 
 			/**************************** Memory ***************************/
+			System.out.print("Memory\t::\t");
 			if (memoryStalled) {
-				System.out.println("Memory = " + mem.getInstAtInput());
+				System.out.println(mem.getInstAtInput());
 			} else {
-				System.out.println("Memory = " + mem.getInstAtInput());
+				System.out.println(mem.getInstAtInput());
 
-				if(mem.getOperationAtInput().equals("STORE")){
-					inst.writeToMemory(mem.getTargetAddressAtInput(), operations.getValueFromRegister(mem.getSrc1AtInput()));
-				}
-				else if(mem.getOperationAtInput().equals("LOAD")){
-					operations.updateToRegister(mem.getDestAtInput(), mem.getTargetDataAtInput());
+				if (mem.getOperationAtInput().equals("STORE")) {
+					inst.writeToMemory(mem.getTargetAddressAtInput(),
+							operations.getValueFromRegister(mem
+									.getSrc1AtInput()));
+				} else if (mem.getOperationAtInput().equals("LOAD")) {
+					operations.updateToRegister(mem.getDestAtInput(),
+							mem.getTargetDataAtInput());
 				}
 				// Update WB Input
 				wb = new WriteBackStage(mem.getPCAtOutput(),
@@ -243,25 +279,85 @@ public class PipeLineStages extends ConfigDetails {
 						mem.getTargetAddressAtInput(), mem.getLiteralAtInput());
 			}
 
-			/***************************** Write Back**************************/
+			/***************************** Write Back **************************/
+			System.out.print("Write Back\t::\t");
 			if (wbStalled) {
-				System.out.println("WriteBack = " + wb.getInstAtInput());
+				System.out.println(wb.getInstAtInput());
 			} else {
-				System.out.println("WriteBack = " + wb.getInstAtInput());
+				System.out.println(wb.getInstAtInput());
+				// Write to Reg
 				operations.updateToRegister(wb.getDestAtInput(),
 						wb.getTargetDataAtInput());
-
+				System.out.println("========="+wb.getDestAtInput()+"---"+fetchStalled+"==="+decodeStalled);
 				// Update Register validity to true
 				updateRegisterValidity(wb.getDestAtInput(), true);
 
-				switch(decode.getOperationAtOutput()){
+				//Handle BNZ
+				switch (wb.getOperationAtInput()) {
 				case "ADD":
-					if(wb.getTargetDataAtInput()==0){
-						zeroFlag = true;
+					if ((decode.getInstAtOutput().equals("ADD"))
+							|| (decode.getInstAtOutput().equals("SUB"))
+							&& (decode.getInstAtOutput().equals("MUL"))) {
+
+					} else if ((ex.getInstAtOutput().equals("ADD"))
+							|| (ex.getInstAtOutput().equals("SUB"))
+							&& (ex.getInstAtOutput().equals("MUL"))) {
+
 					}
-					else{
-						zeroFlag = false;
+
+					else if ((mem.getInstAtOutput().equals("ADD"))
+							|| (mem.getInstAtOutput().equals("SUB"))
+							&& (mem.getInstAtOutput().equals("MUL"))) {
+
+					} else {
+						psw.setPswFree(true);
 					}
+					break;
+				case "SUB":
+					if ((decode.getInstAtOutput().equals("ADD"))
+							|| (decode.getInstAtOutput().equals("SUB"))
+							&& (decode.getInstAtOutput().equals("MUL"))) {
+
+					} else if ((ex.getInstAtOutput().equals("ADD"))
+							|| (ex.getInstAtOutput().equals("SUB"))
+							&& (ex.getInstAtOutput().equals("MUL"))) {
+
+					}
+
+					else if ((mem.getInstAtOutput().equals("ADD"))
+							|| (mem.getInstAtOutput().equals("SUB"))
+							&& (mem.getInstAtOutput().equals("MUL"))) {
+
+					} else {
+						psw.setPswFree(true);
+					}
+					break;
+				case "MUL":
+					if ((decode.getInstAtOutput().equals("ADD"))
+							|| (decode.getInstAtOutput().equals("SUB"))
+							&& (decode.getInstAtOutput().equals("MUL"))) {
+
+					} else if ((ex.getInstAtOutput().equals("ADD"))
+							|| (ex.getInstAtOutput().equals("SUB"))
+							&& (ex.getInstAtOutput().equals("MUL"))) {
+
+					}
+
+					else if ((mem.getInstAtOutput().equals("ADD"))
+							|| (mem.getInstAtOutput().equals("SUB"))
+							&& (mem.getInstAtOutput().equals("MUL"))) {
+
+					} else {
+						psw.setPswFree(true);
+					}
+					break;
+				default:
+					break;
+				}
+
+				//Remove Stall Logic
+				switch (decode.getOperationAtOutput()) {
+				case "ADD":
 					if (checkRegisterValidity(decode.getSrc1AtOutput())
 							&& checkRegisterValidity(decode.getSrc2AtOutput())) {
 						fetchStalled = false;
@@ -269,6 +365,13 @@ public class PipeLineStages extends ConfigDetails {
 					}
 					break;
 				case "SUB":
+					if (checkRegisterValidity(decode.getSrc1AtOutput())
+							&& checkRegisterValidity(decode.getSrc2AtOutput())) {
+						fetchStalled = false;
+						decodeStalled = false;
+					}
+					break;
+				case "MUL":
 					if (checkRegisterValidity(decode.getSrc1AtOutput())
 							&& checkRegisterValidity(decode.getSrc2AtOutput())) {
 						fetchStalled = false;
@@ -283,16 +386,22 @@ public class PipeLineStages extends ConfigDetails {
 					}
 					break;
 				case "LOAD":
-					if(!checkRegisterValidity(decode.getSrc1AtOutput())){
+					if (!checkRegisterValidity(decode.getSrc1AtOutput())) {
 						fetchStalled = false;
 						decodeStalled = false;
 					}
 					break;
 				case "JUMP":
-					if(checkRegisterValidity(decode.getSrc1AtInput())){
+					if (checkRegisterValidity(decode.getSrc1AtInput())) {
 						fetchStalled = false;
 						decodeStalled = false;
 					}
+				case "BNZ":
+					if (psw.isPswFree()) {
+						fetchStalled = false;
+						decodeStalled = false;
+					}/*
+					 */
 				default:
 					break;
 				}
@@ -304,16 +413,19 @@ public class PipeLineStages extends ConfigDetails {
 						wb.getPCAtInput(), wb.getTargetDataAtInput(),
 						wb.getTargetAddressAtInput(), wb.getLiteralAtInput());
 
-				//Increment PC value only if there is no stall at any stage
-				if (!(fetchStalled || decodeStalled || executeStalled
-						|| memoryStalled || wbStalled)) {
+				// Increment PC value only if there is no stall at any stage
+				if ((!(fetchStalled || decodeStalled || executeStalled
+						|| memoryStalled || wbStalled))
+						|| ex.getInstAtInput().equals("BNZ")
+						|| ex.getInstAtInput().equals("BZ")) {
 					PC += 4;
 				}
 			}
 			i++;
+			
 		}
 
-		System.out.println(R0 + "====" + R3 + "-----" + R6);
+		// System.out.println(R0 + "====" + R3 + "-----" + R6);
 
 	}
 
@@ -334,6 +446,9 @@ public class PipeLineStages extends ConfigDetails {
 
 		wb = new WriteBackStage(0, 0, 0, 0, "", "", "", "", "");
 		wb = new WriteBackStage("", "", "", "", "", 0, 0, 0, 0);
+
+		// Initialize PSW Flags to false
+		psw = new PSW(false, false, false, true);
 
 		// Initialize value of PC
 		PC = 4000;
@@ -372,12 +487,14 @@ public class PipeLineStages extends ConfigDetails {
 		R13Valid = true;
 		R14Valid = true;
 		R15Valid = true;
-		
+
 		// Initialize zero Flag to false by default
 		zeroFlag = false;
-		
-		// Initialize last arithmetic PC value to 65535 as this value should be larger than the PC of last arithmetic instruction
+
+		// Initialize last arithmetic PC value to 65535 as this value should be
+		// larger than the PC of last arithmetic instruction
 		lastArithmeticPC = 65536;
+
 	}
 
 	boolean checkRegisterValidity(String registerName) {
@@ -445,49 +562,49 @@ public class PipeLineStages extends ConfigDetails {
 			R0Valid = status;
 			break;
 		case "R1":
-			R1Valid = false;
+			R1Valid = status;
 			break;
 		case "R2":
-			R2Valid = false;
+			R2Valid = status;
 			break;
 		case "R3":
-			R3Valid = false;
+			R3Valid = status;
 			break;
 		case "R4":
-			R4Valid = false;
+			R4Valid = status;
 			break;
 		case "R5":
-			R5Valid = false;
+			R5Valid = status;
 			break;
 		case "R6":
-			R6Valid = false;
+			R6Valid = status;
 			break;
 		case "R7":
-			R7Valid = false;
+			R7Valid = status;
 			break;
 		case "R8":
-			R8Valid = false;
+			R8Valid = status;
 			break;
 		case "R9":
-			R9Valid = false;
+			R9Valid = status;
 			break;
 		case "R10":
-			R10Valid = false;
+			R10Valid = status;
 			break;
 		case "R11":
-			R11Valid = false;
+			R11Valid = status;
 			break;
 		case "R12":
-			R12Valid = false;
+			R12Valid = status;
 			break;
 		case "R13":
-			R13Valid = false;
+			R13Valid = status;
 			break;
 		case "R14":
-			R14Valid = false;
+			R14Valid = status;
 			break;
 		case "R15":
-			R15Valid = false;
+			R15Valid = status;
 			break;
 		default:
 			break;
