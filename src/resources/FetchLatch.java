@@ -1,6 +1,6 @@
 package resources;
 
-public class FetchStage {
+public class FetchLatch {
 
 	static int PCAtInput;
 	static int targetDataAtInput;
@@ -24,7 +24,7 @@ public class FetchStage {
 
 	static boolean stall;
 
-	public FetchStage() {
+	public FetchLatch() {
 
 	}
 
@@ -48,19 +48,19 @@ public class FetchStage {
 	 *            OperationAtOutput
 	 * @return void
 	 ******************************************************************/
-	public FetchStage(int PCAtInput, int targetDataAtInput,
+	public FetchLatch(int PCAtInput, int targetDataAtInput,
 			int targetAddressAtInput, int literalAtInput, String instAtInput,
 			String src1AtInput, String src2AtInput, String destAtInput,
 			String OperationAtInput) {
-		FetchStage.PCAtInput = PCAtInput;
-		FetchStage.targetDataAtInput = targetDataAtInput;
-		FetchStage.targetAddressAtInput = targetAddressAtInput;
-		FetchStage.literalAtInput = literalAtInput;
-		FetchStage.instAtInput = instAtInput;
-		FetchStage.src1AtInput = src1AtInput;
-		FetchStage.src2AtInput = src2AtInput;
-		FetchStage.destAtInput = destAtInput;
-		FetchStage.OperationAtInput = OperationAtInput;
+		FetchLatch.PCAtInput = PCAtInput;
+		FetchLatch.targetDataAtInput = targetDataAtInput;
+		FetchLatch.targetAddressAtInput = targetAddressAtInput;
+		FetchLatch.literalAtInput = literalAtInput;
+		FetchLatch.instAtInput = instAtInput;
+		FetchLatch.src1AtInput = src1AtInput;
+		FetchLatch.src2AtInput = src2AtInput;
+		FetchLatch.destAtInput = destAtInput;
+		FetchLatch.OperationAtInput = OperationAtInput;
 	}
 
 	/******************************************************************
@@ -82,19 +82,19 @@ public class FetchStage {
 	 * @param int literalAtOutput
 	 * @return void
 	 ******************************************************************/
-	public FetchStage(String instAtOutput, String src1AtOutput,
+	public FetchLatch(String instAtOutput, String src1AtOutput,
 			String src2AtOutput, String destAtOutput, String OperationAtOutput,
 			int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput,
 			int literalAtOutput) {
-		FetchStage.instAtOutput = instAtOutput;
-		FetchStage.src1AtOutput = src1AtOutput;
-		FetchStage.src2AtOutput = src2AtOutput;
-		FetchStage.destAtOutput = destAtOutput;
-		FetchStage.OperationAtOutput = OperationAtOutput;
-		FetchStage.PCAtOutput = PCAtOutput;
-		FetchStage.targetDataAtOutput = targetDataAtOutput;
-		FetchStage.targetAddressAtOutput = targetAddressAtOutput;
-		FetchStage.literalAtOutput = literalAtOutput;
+		FetchLatch.instAtOutput = instAtOutput;
+		FetchLatch.src1AtOutput = src1AtOutput;
+		FetchLatch.src2AtOutput = src2AtOutput;
+		FetchLatch.destAtOutput = destAtOutput;
+		FetchLatch.OperationAtOutput = OperationAtOutput;
+		FetchLatch.PCAtOutput = PCAtOutput;
+		FetchLatch.targetDataAtOutput = targetDataAtOutput;
+		FetchLatch.targetAddressAtOutput = targetAddressAtOutput;
+		FetchLatch.literalAtOutput = literalAtOutput;
 	}
 
 	public boolean isStall() {
@@ -102,7 +102,7 @@ public class FetchStage {
 	}
 
 	public void setStall(boolean stall) {
-		FetchStage.stall = stall;
+		FetchLatch.stall = stall;
 	}
 
 	public int getPCAtInput() {
@@ -118,7 +118,7 @@ public class FetchStage {
 	}
 
 	public void setTargetDataAtInput(int targetDataAtInput) {
-		FetchStage.targetDataAtInput = targetDataAtInput;
+		FetchLatch.targetDataAtInput = targetDataAtInput;
 	}
 
 	public int getTargetAddressAtInput() {
@@ -126,7 +126,7 @@ public class FetchStage {
 	}
 
 	public void setTargetAddressAtInput(int targetAddressAtInput) {
-		FetchStage.targetAddressAtInput = targetAddressAtInput;
+		FetchLatch.targetAddressAtInput = targetAddressAtInput;
 	}
 
 	public int getLiteralAtInput() {
@@ -134,7 +134,7 @@ public class FetchStage {
 	}
 
 	public void setLiteralAtInput(int literalAtInput) {
-		FetchStage.literalAtInput = literalAtInput;
+		FetchLatch.literalAtInput = literalAtInput;
 	}
 
 	public String getInstAtInput() {
@@ -142,7 +142,7 @@ public class FetchStage {
 	}
 
 	public void setInstAtInput(String instAtInput) {
-		FetchStage.instAtInput = instAtInput;
+		FetchLatch.instAtInput = instAtInput;
 	}
 
 	public String getSrc1AtInput() {
@@ -150,7 +150,7 @@ public class FetchStage {
 	}
 
 	public void setSrc1AtInput(String src1AtInput) {
-		FetchStage.src1AtInput = src1AtInput;
+		FetchLatch.src1AtInput = src1AtInput;
 	}
 
 	public String getSrc2AtInput() {
@@ -158,7 +158,7 @@ public class FetchStage {
 	}
 
 	public void setSrc2AtInput(String src2AtInput) {
-		FetchStage.src2AtInput = src2AtInput;
+		FetchLatch.src2AtInput = src2AtInput;
 	}
 
 	public String getDestAtInput() {
@@ -166,7 +166,7 @@ public class FetchStage {
 	}
 
 	public void setDestAtInput(String destAtInput) {
-		FetchStage.destAtInput = destAtInput;
+		FetchLatch.destAtInput = destAtInput;
 	}
 
 	public String getOperationAtInput() {
@@ -190,7 +190,7 @@ public class FetchStage {
 	}
 
 	public void setTargetDataAtOutput(int targetDataAtOutput) {
-		FetchStage.targetDataAtOutput = targetDataAtOutput;
+		FetchLatch.targetDataAtOutput = targetDataAtOutput;
 	}
 
 	public int getTargetAddressAtOutput() {
@@ -198,7 +198,7 @@ public class FetchStage {
 	}
 
 	public void setTargetAddressAtOutput(int targetAddressAtOutput) {
-		FetchStage.targetAddressAtOutput = targetAddressAtOutput;
+		FetchLatch.targetAddressAtOutput = targetAddressAtOutput;
 	}
 
 	public int getLiteralAtOutput() {
@@ -206,7 +206,7 @@ public class FetchStage {
 	}
 
 	public void setLiteralAtOutput(int literalAtOutput) {
-		FetchStage.literalAtOutput = literalAtOutput;
+		FetchLatch.literalAtOutput = literalAtOutput;
 	}
 
 	public String getInstAtOutput() {
@@ -214,7 +214,7 @@ public class FetchStage {
 	}
 
 	public void setInstAtOutput(String instAtOutput) {
-		FetchStage.instAtOutput = instAtOutput;
+		FetchLatch.instAtOutput = instAtOutput;
 	}
 
 	public String getSrc1AtOutput() {
@@ -222,7 +222,7 @@ public class FetchStage {
 	}
 
 	public void setSrc1AtOutput(String src1AtOutput) {
-		FetchStage.src1AtOutput = src1AtOutput;
+		FetchLatch.src1AtOutput = src1AtOutput;
 	}
 
 	public String getSrc2AtOutput() {
@@ -230,7 +230,7 @@ public class FetchStage {
 	}
 
 	public void setSrc2AtOutput(String src2AtOutput) {
-		FetchStage.src2AtOutput = src2AtOutput;
+		FetchLatch.src2AtOutput = src2AtOutput;
 	}
 
 	public String getDestAtOutput() {
@@ -238,7 +238,7 @@ public class FetchStage {
 	}
 
 	public void setDestAtOutput(String destAtOutput) {
-		FetchStage.destAtOutput = destAtOutput;
+		FetchLatch.destAtOutput = destAtOutput;
 	}
 
 	public String getOperationAtOutput() {

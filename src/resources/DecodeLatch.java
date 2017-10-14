@@ -1,7 +1,7 @@
 package resources;
 
 
-public class DecodeStage{
+public class DecodeLatch{
 
 
 	static int PCAtInput;
@@ -24,7 +24,7 @@ public class DecodeStage{
 	static String destAtOutput;
 	static String OperationAtOutput;
 
-	public DecodeStage(){
+	public DecodeLatch(){
 		
 	}
 
@@ -42,16 +42,16 @@ public class DecodeStage{
 	@param	String OperationAtOutput
 	@return void
 	******************************************************************/
-	public DecodeStage(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
-		DecodeStage.PCAtInput = PCAtInput;
-		DecodeStage.targetDataAtInput = targetDataAtInput;
-		DecodeStage.targetAddressAtInput = targetAddressAtInput;
-		DecodeStage.literalAtInput = literalAtInput;
-		DecodeStage.instAtInput = instAtInput;
-		DecodeStage.src1AtInput = src1AtInput;
-		DecodeStage.src2AtInput = src2AtInput;
-		DecodeStage.destAtInput = destAtInput;
-		DecodeStage.OperationAtInput = OperationAtInput;
+	public DecodeLatch(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
+		DecodeLatch.PCAtInput = PCAtInput;
+		DecodeLatch.targetDataAtInput = targetDataAtInput;
+		DecodeLatch.targetAddressAtInput = targetAddressAtInput;
+		DecodeLatch.literalAtInput = literalAtInput;
+		DecodeLatch.instAtInput = instAtInput;
+		DecodeLatch.src1AtInput = src1AtInput;
+		DecodeLatch.src2AtInput = src2AtInput;
+		DecodeLatch.destAtInput = destAtInput;
+		DecodeLatch.OperationAtInput = OperationAtInput;
 	}
 
 	//Decode Output
@@ -68,16 +68,16 @@ public class DecodeStage{
 	@param	int literalAtOutput
 	@return void
 	******************************************************************/
-	public DecodeStage(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
-		DecodeStage.instAtOutput = instAtOutput;
-		DecodeStage.src1AtOutput = src1AtOutput;
-		DecodeStage.src2AtOutput = src2AtOutput;
-		DecodeStage.destAtOutput = destAtOutput;
-		DecodeStage.OperationAtOutput = OperationAtOutput;	
-		DecodeStage.PCAtOutput = PCAtOutput;
-		DecodeStage.targetDataAtOutput = targetDataAtOutput;
-		DecodeStage.targetAddressAtOutput = targetAddressAtOutput;
-		DecodeStage.literalAtOutput = literalAtOutput;
+	public DecodeLatch(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
+		DecodeLatch.instAtOutput = instAtOutput;
+		DecodeLatch.src1AtOutput = src1AtOutput;
+		DecodeLatch.src2AtOutput = src2AtOutput;
+		DecodeLatch.destAtOutput = destAtOutput;
+		DecodeLatch.OperationAtOutput = OperationAtOutput;	
+		DecodeLatch.PCAtOutput = PCAtOutput;
+		DecodeLatch.targetDataAtOutput = targetDataAtOutput;
+		DecodeLatch.targetAddressAtOutput = targetAddressAtOutput;
+		DecodeLatch.literalAtOutput = literalAtOutput;
 	}
 
 	public int getPCAtInput() {
@@ -90,43 +90,43 @@ public class DecodeStage{
 		return targetDataAtInput;
 	}
 	public void setTargetDataAtInput(int targetDataAtInput) {
-		DecodeStage.targetDataAtInput = targetDataAtInput;
+		DecodeLatch.targetDataAtInput = targetDataAtInput;
 	}
 	public int getTargetAddressAtInput() {
 		return targetAddressAtInput;
 	}
 	public void setTargetAddressAtInput(int targetAddressAtInput) {
-		DecodeStage.targetAddressAtInput = targetAddressAtInput;
+		DecodeLatch.targetAddressAtInput = targetAddressAtInput;
 	}
 	public int getLiteralAtInput() {
 		return literalAtInput;
 	}
 	public void setLiteralAtInput(int literalAtInput) {
-		DecodeStage.literalAtInput = literalAtInput;
+		DecodeLatch.literalAtInput = literalAtInput;
 	}
 	public String getInstAtInput() {
 		return instAtInput;
 	}
 	public void setInstAtInput(String instAtInput) {
-		DecodeStage.instAtInput = instAtInput;
+		DecodeLatch.instAtInput = instAtInput;
 	}
 	public String getSrc1AtInput() {
 		return src1AtInput;
 	}
 	public void setSrc1AtInput(String src1AtInput) {
-		DecodeStage.src1AtInput = src1AtInput;
+		DecodeLatch.src1AtInput = src1AtInput;
 	}
 	public String getSrc2AtInput() {
 		return src2AtInput;
 	}
 	public void setSrc2AtInput(String src2AtInput) {
-		DecodeStage.src2AtInput = src2AtInput;
+		DecodeLatch.src2AtInput = src2AtInput;
 	}
 	public String getDestAtInput() {
 		return destAtInput;
 	}
 	public void setDestAtInput(String destAtInput) {
-		DecodeStage.destAtInput = destAtInput;
+		DecodeLatch.destAtInput = destAtInput;
 	}
 	public String getOperationAtInput() {
 		return OperationAtInput;
@@ -144,43 +144,43 @@ public class DecodeStage{
 		return targetDataAtOutput;
 	}
 	public void setTargetDataAtOutput(int targetDataAtOutput) {
-		DecodeStage.targetDataAtOutput = targetDataAtOutput;
+		DecodeLatch.targetDataAtOutput = targetDataAtOutput;
 	}
 	public int getTargetAddressAtOutput() {
 		return targetAddressAtOutput;
 	}
 	public void setTargetAddressAtOutput(int targetAddressAtOutput) {
-		DecodeStage.targetAddressAtOutput = targetAddressAtOutput;
+		DecodeLatch.targetAddressAtOutput = targetAddressAtOutput;
 	}
 	public int getLiteralAtOutput() {
 		return literalAtOutput;
 	}
 	public void setLiteralAtOutput(int literalAtOutput) {
-		DecodeStage.literalAtOutput = literalAtOutput;
+		DecodeLatch.literalAtOutput = literalAtOutput;
 	}
 	public String getInstAtOutput() {
 		return instAtOutput;
 	}
 	public void setInstAtOutput(String instAtOutput) {
-		DecodeStage.instAtOutput = instAtOutput;
+		DecodeLatch.instAtOutput = instAtOutput;
 	}
 	public String getSrc1AtOutput() {
 		return src1AtOutput;
 	}
 	public void setSrc1AtOutput(String src1AtOutput) {
-		DecodeStage.src1AtOutput = src1AtOutput;
+		DecodeLatch.src1AtOutput = src1AtOutput;
 	}
 	public String getSrc2AtOutput() {
 		return src2AtOutput;
 	}
 	public void setSrc2AtOutput(String src2AtOutput) {
-		DecodeStage.src2AtOutput = src2AtOutput;
+		DecodeLatch.src2AtOutput = src2AtOutput;
 	}
 	public String getDestAtOutput() {
 		return destAtOutput;
 	}
 	public void setDestAtOutput(String destAtOutput) {
-		DecodeStage.destAtOutput = destAtOutput;
+		DecodeLatch.destAtOutput = destAtOutput;
 	}
 	public String getOperationAtOutput() {
 		return OperationAtOutput;

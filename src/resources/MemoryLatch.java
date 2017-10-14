@@ -1,6 +1,6 @@
 package resources;
 
-public class MemoryStage {
+public class MemoryLatch {
 
 	
 	static int PCAtInput;
@@ -23,7 +23,7 @@ public class MemoryStage {
 	static String destAtOutput;
 	static String OperationAtOutput;
 
-	public MemoryStage(){
+	public MemoryLatch(){
 		
 	}
 	
@@ -41,16 +41,16 @@ public class MemoryStage {
 	@param	String OperationAtOutput
 	@return void
 	******************************************************************/
-	public MemoryStage(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
-		MemoryStage.PCAtInput = PCAtInput;
-		MemoryStage.targetDataAtInput = targetDataAtInput;
-		MemoryStage.targetAddressAtInput = targetAddressAtInput;
-		MemoryStage.literalAtInput = literalAtInput;
-		MemoryStage.instAtInput = instAtInput;
-		MemoryStage.src1AtInput = src1AtInput;
-		MemoryStage.src2AtInput = src2AtInput;
-		MemoryStage.destAtInput = destAtInput;
-		MemoryStage.OperationAtInput = OperationAtInput;
+	public MemoryLatch(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
+		MemoryLatch.PCAtInput = PCAtInput;
+		MemoryLatch.targetDataAtInput = targetDataAtInput;
+		MemoryLatch.targetAddressAtInput = targetAddressAtInput;
+		MemoryLatch.literalAtInput = literalAtInput;
+		MemoryLatch.instAtInput = instAtInput;
+		MemoryLatch.src1AtInput = src1AtInput;
+		MemoryLatch.src2AtInput = src2AtInput;
+		MemoryLatch.destAtInput = destAtInput;
+		MemoryLatch.OperationAtInput = OperationAtInput;
 	}
 
 	//Memory Output
@@ -67,16 +67,16 @@ public class MemoryStage {
 	@param	int literalAtOutput
 	@return void
 	******************************************************************/
-	public MemoryStage(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
-		MemoryStage.instAtOutput = instAtOutput;
-		MemoryStage.src1AtOutput = src1AtOutput;
-		MemoryStage.src2AtOutput = src2AtOutput;
-		MemoryStage.destAtOutput = destAtOutput;
-		MemoryStage.OperationAtOutput = OperationAtOutput;	
-		MemoryStage.PCAtOutput = PCAtOutput;
-		MemoryStage.targetDataAtOutput = targetDataAtOutput;
-		MemoryStage.targetAddressAtOutput = targetAddressAtOutput;
-		MemoryStage.literalAtOutput = literalAtOutput;
+	public MemoryLatch(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
+		MemoryLatch.instAtOutput = instAtOutput;
+		MemoryLatch.src1AtOutput = src1AtOutput;
+		MemoryLatch.src2AtOutput = src2AtOutput;
+		MemoryLatch.destAtOutput = destAtOutput;
+		MemoryLatch.OperationAtOutput = OperationAtOutput;	
+		MemoryLatch.PCAtOutput = PCAtOutput;
+		MemoryLatch.targetDataAtOutput = targetDataAtOutput;
+		MemoryLatch.targetAddressAtOutput = targetAddressAtOutput;
+		MemoryLatch.literalAtOutput = literalAtOutput;
 	}
 
 	public int getPCAtInput() {
@@ -89,43 +89,43 @@ public class MemoryStage {
 		return targetDataAtInput;
 	}
 	public void setTargetDataAtInput(int targetDataAtInput) {
-		MemoryStage.targetDataAtInput = targetDataAtInput;
+		MemoryLatch.targetDataAtInput = targetDataAtInput;
 	}
 	public int getTargetAddressAtInput() {
 		return targetAddressAtInput;
 	}
 	public void setTargetAddressAtInput(int targetAddressAtInput) {
-		MemoryStage.targetAddressAtInput = targetAddressAtInput;
+		MemoryLatch.targetAddressAtInput = targetAddressAtInput;
 	}
 	public int getLiteralAtInput() {
 		return literalAtInput;
 	}
 	public void setLiteralAtInput(int literalAtInput) {
-		MemoryStage.literalAtInput = literalAtInput;
+		MemoryLatch.literalAtInput = literalAtInput;
 	}
 	public String getInstAtInput() {
 		return instAtInput;
 	}
 	public void setInstAtInput(String instAtInput) {
-		MemoryStage.instAtInput = instAtInput;
+		MemoryLatch.instAtInput = instAtInput;
 	}
 	public String getSrc1AtInput() {
 		return src1AtInput;
 	}
 	public void setSrc1AtInput(String src1AtInput) {
-		MemoryStage.src1AtInput = src1AtInput;
+		MemoryLatch.src1AtInput = src1AtInput;
 	}
 	public String getSrc2AtInput() {
 		return src2AtInput;
 	}
 	public void setSrc2AtInput(String src2AtInput) {
-		MemoryStage.src2AtInput = src2AtInput;
+		MemoryLatch.src2AtInput = src2AtInput;
 	}
 	public String getDestAtInput() {
 		return destAtInput;
 	}
 	public void setDestAtInput(String destAtInput) {
-		MemoryStage.destAtInput = destAtInput;
+		MemoryLatch.destAtInput = destAtInput;
 	}
 	public String getOperationAtInput() {
 		return OperationAtInput;
@@ -143,43 +143,43 @@ public class MemoryStage {
 		return targetDataAtOutput;
 	}
 	public void setTargetDataAtOutput(int targetDataAtOutput) {
-		MemoryStage.targetDataAtOutput = targetDataAtOutput;
+		MemoryLatch.targetDataAtOutput = targetDataAtOutput;
 	}
 	public int getTargetAddressAtOutput() {
 		return targetAddressAtOutput;
 	}
 	public void setTargetAddressAtOutput(int targetAddressAtOutput) {
-		MemoryStage.targetAddressAtOutput = targetAddressAtOutput;
+		MemoryLatch.targetAddressAtOutput = targetAddressAtOutput;
 	}
 	public int getLiteralAtOutput() {
 		return literalAtOutput;
 	}
 	public void setLiteralAtOutput(int literalAtOutput) {
-		MemoryStage.literalAtOutput = literalAtOutput;
+		MemoryLatch.literalAtOutput = literalAtOutput;
 	}
 	public String getInstAtOutput() {
 		return instAtOutput;
 	}
 	public void setInstAtOutput(String instAtOutput) {
-		MemoryStage.instAtOutput = instAtOutput;
+		MemoryLatch.instAtOutput = instAtOutput;
 	}
 	public String getSrc1AtOutput() {
 		return src1AtOutput;
 	}
 	public void setSrc1AtOutput(String src1AtOutput) {
-		MemoryStage.src1AtOutput = src1AtOutput;
+		MemoryLatch.src1AtOutput = src1AtOutput;
 	}
 	public String getSrc2AtOutput() {
 		return src2AtOutput;
 	}
 	public void setSrc2AtOutput(String src2AtOutput) {
-		MemoryStage.src2AtOutput = src2AtOutput;
+		MemoryLatch.src2AtOutput = src2AtOutput;
 	}
 	public String getDestAtOutput() {
 		return destAtOutput;
 	}
 	public void setDestAtOutput(String destAtOutput) {
-		MemoryStage.destAtOutput = destAtOutput;
+		MemoryLatch.destAtOutput = destAtOutput;
 	}
 	public String getOperationAtOutput() {
 		return OperationAtOutput;

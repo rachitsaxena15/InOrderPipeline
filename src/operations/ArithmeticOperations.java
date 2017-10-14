@@ -19,6 +19,11 @@ public class ArithmeticOperations extends ConfigDetails{
 		return res;
 	}
 	
+	public int xor(String src1, String src2){
+		int res = getValueFromRegister(src1) ^ getValueFromRegister(src2);
+		return res;
+	}
+	
 	public int add(String src1, int literal){
 		int res = getValueFromRegister(src1)+literal;
 		return res;

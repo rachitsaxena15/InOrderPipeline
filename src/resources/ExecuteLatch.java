@@ -1,7 +1,8 @@
 package resources;
 
-public class WriteBackStage {
 
+public class ExecuteLatch{
+	
 	static int PCAtInput;
 	static int targetDataAtInput;
 	static int targetAddressAtInput;
@@ -22,13 +23,13 @@ public class WriteBackStage {
 	static String destAtOutput;
 	static String OperationAtOutput;
 
-	public WriteBackStage(){
+	public ExecuteLatch(){
 		
 	}
 	
-	//Memory Input
+	//Execute Input
 	/******************************************************************
-	Write Back Input - Sets Input values of WRITE BACK stage
+	Execute Input - Sets Input values of EXECUTE stage
 	@param	int PCAtOutput
 	@param	int targetDataAtOutput
 	@param	int targetAddressAtOutput
@@ -40,21 +41,21 @@ public class WriteBackStage {
 	@param	String OperationAtOutput
 	@return void
 	******************************************************************/
-	public WriteBackStage(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
-		WriteBackStage.PCAtInput = PCAtInput;
-		WriteBackStage.targetDataAtInput = targetDataAtInput;
-		WriteBackStage.targetAddressAtInput = targetAddressAtInput;
-		WriteBackStage.literalAtInput = literalAtInput;
-		WriteBackStage.instAtInput = instAtInput;
-		WriteBackStage.src1AtInput = src1AtInput;
-		WriteBackStage.src2AtInput = src2AtInput;
-		WriteBackStage.destAtInput = destAtInput;
-		WriteBackStage.OperationAtInput = OperationAtInput;
+	public ExecuteLatch(int PCAtInput, int targetDataAtInput, int targetAddressAtInput, int literalAtInput, String instAtInput, String src1AtInput, String src2AtInput, String destAtInput, String OperationAtInput){
+		ExecuteLatch.PCAtInput = PCAtInput;
+		ExecuteLatch.targetDataAtInput = targetDataAtInput;
+		ExecuteLatch.targetAddressAtInput = targetAddressAtInput;
+		ExecuteLatch.literalAtInput = literalAtInput;
+		ExecuteLatch.instAtInput = instAtInput;
+		ExecuteLatch.src1AtInput = src1AtInput;
+		ExecuteLatch.src2AtInput = src2AtInput;
+		ExecuteLatch.destAtInput = destAtInput;
+		ExecuteLatch.OperationAtInput = OperationAtInput;
 	}
 
-	//Memory Output
+	//Execute Output
 	/******************************************************************
-	Write Back Output - Sets Output values of WRITE BACK stage
+	Execute Output - Sets Output values of EXECUTE stage
 	@param	String instAtOutput
 	@param	String src1AtOutput
 	@param	String src2AtOutput 
@@ -66,16 +67,16 @@ public class WriteBackStage {
 	@param	int literalAtOutput
 	@return void
 	******************************************************************/
-	public WriteBackStage(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
-		WriteBackStage.instAtOutput = instAtOutput;
-		WriteBackStage.src1AtOutput = src1AtOutput;
-		WriteBackStage.src2AtOutput = src2AtOutput;
-		WriteBackStage.destAtOutput = destAtOutput;
-		WriteBackStage.OperationAtOutput = OperationAtOutput;	
-		WriteBackStage.PCAtOutput = PCAtOutput;
-		WriteBackStage.targetDataAtOutput = targetDataAtOutput;
-		WriteBackStage.targetAddressAtOutput = targetAddressAtOutput;
-		WriteBackStage.literalAtOutput = literalAtOutput;
+	public ExecuteLatch(String instAtOutput, String src1AtOutput, String src2AtOutput, String destAtOutput, String OperationAtOutput, int PCAtOutput, int targetDataAtOutput, int targetAddressAtOutput, int literalAtOutput){
+		ExecuteLatch.instAtOutput = instAtOutput;
+		ExecuteLatch.src1AtOutput = src1AtOutput;
+		ExecuteLatch.src2AtOutput = src2AtOutput;
+		ExecuteLatch.destAtOutput = destAtOutput;
+		ExecuteLatch.OperationAtOutput = OperationAtOutput;	
+		ExecuteLatch.PCAtOutput = PCAtOutput;
+		ExecuteLatch.targetDataAtOutput = targetDataAtOutput;
+		ExecuteLatch.targetAddressAtOutput = targetAddressAtOutput;
+		ExecuteLatch.literalAtOutput = literalAtOutput;
 	}
 
 	public int getPCAtInput() {
@@ -88,43 +89,43 @@ public class WriteBackStage {
 		return targetDataAtInput;
 	}
 	public void setTargetDataAtInput(int targetDataAtInput) {
-		WriteBackStage.targetDataAtInput = targetDataAtInput;
+		ExecuteLatch.targetDataAtInput = targetDataAtInput;
 	}
 	public int getTargetAddressAtInput() {
 		return targetAddressAtInput;
 	}
 	public void setTargetAddressAtInput(int targetAddressAtInput) {
-		WriteBackStage.targetAddressAtInput = targetAddressAtInput;
+		ExecuteLatch.targetAddressAtInput = targetAddressAtInput;
 	}
 	public int getLiteralAtInput() {
 		return literalAtInput;
 	}
 	public void setLiteralAtInput(int literalAtInput) {
-		WriteBackStage.literalAtInput = literalAtInput;
+		ExecuteLatch.literalAtInput = literalAtInput;
 	}
 	public String getInstAtInput() {
 		return instAtInput;
 	}
 	public void setInstAtInput(String instAtInput) {
-		WriteBackStage.instAtInput = instAtInput;
+		ExecuteLatch.instAtInput = instAtInput;
 	}
 	public String getSrc1AtInput() {
 		return src1AtInput;
 	}
 	public void setSrc1AtInput(String src1AtInput) {
-		WriteBackStage.src1AtInput = src1AtInput;
+		ExecuteLatch.src1AtInput = src1AtInput;
 	}
 	public String getSrc2AtInput() {
 		return src2AtInput;
 	}
 	public void setSrc2AtInput(String src2AtInput) {
-		WriteBackStage.src2AtInput = src2AtInput;
+		ExecuteLatch.src2AtInput = src2AtInput;
 	}
 	public String getDestAtInput() {
 		return destAtInput;
 	}
 	public void setDestAtInput(String destAtInput) {
-		WriteBackStage.destAtInput = destAtInput;
+		ExecuteLatch.destAtInput = destAtInput;
 	}
 	public String getOperationAtInput() {
 		return OperationAtInput;
@@ -142,43 +143,43 @@ public class WriteBackStage {
 		return targetDataAtOutput;
 	}
 	public void setTargetDataAtOutput(int targetDataAtOutput) {
-		WriteBackStage.targetDataAtOutput = targetDataAtOutput;
+		ExecuteLatch.targetDataAtOutput = targetDataAtOutput;
 	}
 	public int getTargetAddressAtOutput() {
 		return targetAddressAtOutput;
 	}
 	public void setTargetAddressAtOutput(int targetAddressAtOutput) {
-		WriteBackStage.targetAddressAtOutput = targetAddressAtOutput;
+		ExecuteLatch.targetAddressAtOutput = targetAddressAtOutput;
 	}
 	public int getLiteralAtOutput() {
 		return literalAtOutput;
 	}
 	public void setLiteralAtOutput(int literalAtOutput) {
-		WriteBackStage.literalAtOutput = literalAtOutput;
+		ExecuteLatch.literalAtOutput = literalAtOutput;
 	}
 	public String getInstAtOutput() {
 		return instAtOutput;
 	}
 	public void setInstAtOutput(String instAtOutput) {
-		WriteBackStage.instAtOutput = instAtOutput;
+		ExecuteLatch.instAtOutput = instAtOutput;
 	}
 	public String getSrc1AtOutput() {
 		return src1AtOutput;
 	}
 	public void setSrc1AtOutput(String src1AtOutput) {
-		WriteBackStage.src1AtOutput = src1AtOutput;
+		ExecuteLatch.src1AtOutput = src1AtOutput;
 	}
 	public String getSrc2AtOutput() {
 		return src2AtOutput;
 	}
 	public void setSrc2AtOutput(String src2AtOutput) {
-		WriteBackStage.src2AtOutput = src2AtOutput;
+		ExecuteLatch.src2AtOutput = src2AtOutput;
 	}
 	public String getDestAtOutput() {
 		return destAtOutput;
 	}
 	public void setDestAtOutput(String destAtOutput) {
-		WriteBackStage.destAtOutput = destAtOutput;
+		ExecuteLatch.destAtOutput = destAtOutput;
 	}
 	public String getOperationAtOutput() {
 		return OperationAtOutput;

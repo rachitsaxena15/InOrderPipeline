@@ -40,9 +40,6 @@ public class ConfigDetails {
 	public static boolean R14Valid;
 	public static boolean R15Valid;
 	
-	// List of instructions in D/RF.
-	public static ArrayList<String> list = new ArrayList<>();
-
 	// Maintaining stall status of each stage
 	public static boolean fetchStalled = false;
 	public static boolean decodeStalled = false;
@@ -53,10 +50,4 @@ public class ConfigDetails {
 	// Base value of PC
 	public static int PC;
 	
-	//Zero Flag
-	public static boolean zeroFlag;
-	
-	//PC of last executed Arithmetic Instruction
-	public static int lastArithmeticPC;
-
 }
