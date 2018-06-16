@@ -21,6 +21,7 @@ public class ConfigDetails {
 	public static int R13;
 	public static int R14;
 	public static int R15;
+	//public static int R15;
 
 	// Busy bit of Each Register
 	public static boolean R0Valid;
